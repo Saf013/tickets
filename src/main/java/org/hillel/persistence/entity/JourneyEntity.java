@@ -1,6 +1,7 @@
 package org.hillel.persistence.entity;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -10,6 +11,7 @@ import java.time.LocalDate;
 @Table(name = "journey")
 @Getter
 @Setter
+@NoArgsConstructor
 public class JourneyEntity {
 
     @Id
