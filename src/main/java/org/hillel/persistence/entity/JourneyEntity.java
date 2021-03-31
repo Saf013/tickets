@@ -5,7 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.time.LocalDate;
+import java.time.Instant;
 
 @Entity
 @Table(name = "journey")
@@ -25,10 +25,10 @@ public class JourneyEntity {
     private String stationTo;
 
     @Column(name = "departure")
-    private LocalDate departure;
+    private Instant departure;
 
     @Column(name = "arrival")
-    private LocalDate arrival;
+    private Instant arrival;
 
     @Column(name = "route", length = 80, nullable = false)
     private String route;

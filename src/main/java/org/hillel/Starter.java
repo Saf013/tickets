@@ -5,6 +5,7 @@ import org.hillel.service.TicketClient;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import java.time.Instant;
 import java.time.LocalDate;
 
 public class Starter {
@@ -17,8 +18,8 @@ public class Starter {
         JourneyEntity journeyEntity = new JourneyEntity();
         journeyEntity.setStationFrom("Kiev");
         journeyEntity.setStationTo("Odessa");
-        journeyEntity.setDeparture(LocalDate.of(2021,03,12));
-        journeyEntity.setArrival(LocalDate.of(2021,03,13));
+        journeyEntity.setDeparture(Instant.now());
+        journeyEntity.setArrival(Instant.now());
         journeyEntity.setRoute("Kiev->Odessa");
         ticketClient.create(journeyEntity);
     }
