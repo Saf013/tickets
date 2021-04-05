@@ -37,7 +37,6 @@ public class DataBaseConfig {
         hikariConfig.addDataSourceProperty("databaseName",environment.getProperty("database.name"));
         hikariConfig.setMinimumIdle(Integer.parseInt(Objects.requireNonNull(environment.getProperty("database.minimumIdle"))));
         hikariConfig.setMaximumPoolSize(Integer.parseInt(Objects.requireNonNull(environment.getProperty("database.maximumPoolSize"))));
-        hikariConfig.setMaxLifetime(Long.parseLong(Objects.requireNonNull(environment.getProperty("database.maxLifeTime"))));
         hikariConfig.setDataSourceClassName(PGSimpleDataSource.class.getName());
         return new HikariDataSource(hikariConfig);
     }
@@ -52,6 +51,7 @@ public class DataBaseConfig {
         properties.put("hibernate.dialect", PostgreSQL10Dialect.class.getName());
         properties.put("hibernate.hbm2dll.auto", "create-drop");
         properties.put("hibernate.show_sql", "true");
+        properties.put("javax.persistence.query.timeout", 300000);
         efm.setJpaProperties(properties);
         return efm;
     }
