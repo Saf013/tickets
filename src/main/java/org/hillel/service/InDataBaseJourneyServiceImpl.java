@@ -25,15 +25,15 @@ public class InDataBaseJourneyServiceImpl implements JourneyService{
     @SneakyThrows
     @Override
     public Collection<Journey> find(String stationFrom, String stationTo) {
-        return findInDB("SELECT * FROM journey WHERE stationfrom = '" + stationFrom +
-                "' AND stationto = '" + stationTo + "';");
+        return findInDB("SELECT * FROM journey WHERE station_from = '" + stationFrom +
+                "' AND station_to = '" + stationTo + "';");
     }
 
     @SneakyThrows
     @Override
     public Collection<Journey> find(String stationFrom, String stationTo, LocalDate departure, LocalDate arrival) {
-        return findInDB("SELECT * FROM journey WHERE stationfrom = '" + stationFrom +
-                "' AND stationto = '" + stationTo + "' AND departure = '" + departure + "' AND arrival = '" + arrival +"';");
+        return findInDB("SELECT * FROM journey WHERE station_from = '" + stationFrom +
+                "' AND station_to = '" + stationTo + "' AND departure = '" + departure + "' AND arrival = '" + arrival +"';");
     }
 
     @SneakyThrows
@@ -42,7 +42,7 @@ public class InDataBaseJourneyServiceImpl implements JourneyService{
         Statement statement = connect.createStatement();
         ResultSet resultSet = statement.executeQuery(str);
         while (resultSet.next()) {
-            journeys.add(new Journey(resultSet.getString("stationfrom"), resultSet.getString("stationto"),
+            journeys.add(new Journey(resultSet.getString("station_from"), resultSet.getString("station_to"),
                     resultSet.getDate("departure").toLocalDate(), resultSet.getDate("arrival").toLocalDate(),
                     resultSet.getString("route")));
         }
