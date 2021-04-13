@@ -8,14 +8,9 @@ import javax.persistence.PersistenceContext;
 import java.util.Objects;
 
 @Repository
-public class JourneyRepository {
+public class JourneyRepository extends CommonRepository<JourneyEntity, Long>{
 
-    @PersistenceContext
-    private EntityManager entityManager;
-
-    public  Long create(final JourneyEntity journeyEntity) {
-        Objects.requireNonNull(journeyEntity);
-        entityManager.persist(journeyEntity);
-        return journeyEntity.getId();
+    protected JourneyRepository() {
+        super(JourneyEntity.class);
     }
 }

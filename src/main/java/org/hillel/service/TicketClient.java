@@ -1,38 +1,40 @@
 package org.hillel.service;
 
-import org.hillel.Journey;
+import org.hillel.persistence.entity.FreePlacesEntity;
 import org.hillel.persistence.entity.JourneyEntity;
+import org.hillel.persistence.entity.StopEntity;
+import org.hillel.persistence.entity.VehicleEntity;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
-
-import javax.transaction.Transactional;
-import java.time.LocalDate;
-import java.util.Collection;
 
 @Component
 public class TicketClient {
 
-    private JourneyService journeyService;
-
     @Autowired
     private TransactionalJourneyService transactionalJourneyService;
 
-    public TicketClient(@Qualifier("inDataBaseJourneyService")JourneyService journeyService) {
-        this.journeyService = journeyService;
+    @Autowired
+    private TransactionalVehicleService vehicleService;
+
+    @Autowired
+    private TransactionalFreePlaces freePlaces;
+
+    @Autowired
+    private TransactionalStopService stopService;
+
+    public JourneyEntity createOrUpdate(final JourneyEntity journeyEntity) {
+        return transactionalJourneyService.createOrUpdate(journeyEntity);
     }
 
-    @Transactional
-    public Long create(final JourneyEntity journeyEntity) {
-        return transactionalJourneyService.create(journeyEntity);
+    public VehicleEntity createOrUpdate(final VehicleEntity vehicleEntity) {
+        return vehicleService.createOrUpdate(vehicleEntity);
     }
 
-    public Collection<Journey> find(String stationFrom, String stationTo) {
-        return journeyService.find(stationFrom, stationTo);
+    public FreePlacesEntity createOrUpdate(FreePlacesEntity freePlacesEntity) {
+        return freePlaces.createOrUpdate(freePlacesEntity);
     }
 
-    public Collection<Journey> find(String stationFrom, String stationTo, LocalDate departure, LocalDate arrival) {
-        return journeyService.find(stationFrom, stationTo, departure, arrival);
+    public StopEntity createOrUpdate(StopEntity stopEntity) {
+        return stopService.createOrUpdate(stopEntity);
     }
-
 }
