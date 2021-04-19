@@ -4,8 +4,8 @@ import org.hillel.persistence.entity.JourneyEntity;
 import org.hillel.persistence.reposiory.JourneyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
 import java.util.Objects;
 
 @Service
@@ -15,8 +15,8 @@ public class TransactionalJourneyService {
     private JourneyRepository journeyRepository;
 
     @Transactional
-    public Long create(final JourneyEntity journeyEntity) {
+    public JourneyEntity createOrUpdate(final JourneyEntity journeyEntity) {
         Objects.requireNonNull(journeyEntity);
-        return journeyRepository.create(journeyEntity);
+        return journeyRepository.createOrUpdate(journeyEntity);
     }
 }
