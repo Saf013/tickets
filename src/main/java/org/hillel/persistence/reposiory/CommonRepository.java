@@ -12,7 +12,7 @@ import java.util.Optional;
 public abstract class CommonRepository <E extends AbstractModifyEntity<ID>, ID extends Serializable> implements GenericRepository<E, ID> {
 
     @PersistenceContext
-    private EntityManager entityManager;
+    protected EntityManager entityManager;
     private final Class<E> entityClass;
 
     protected CommonRepository(Class<E> entityClass) {
@@ -34,5 +34,20 @@ public abstract class CommonRepository <E extends AbstractModifyEntity<ID>, ID e
     public Optional<E> findById(ID id) {
         if (Objects.isNull(id)) return Optional.empty();
         return Optional.ofNullable(entityManager.find(entityClass, id));
+    }
+
+    @Override
+    public void removeById(ID id) {
+        Objects.requireNonNull(id, "id not must be null.");
+        entityManager.remove(entityManager.getReference(entityClass, id));
+    }
+
+    @Override
+    public void remove(E entity) {
+        if (entityManager.contains(entity)){
+            entityManager.remove(entity);
+        } else {
+            removeById(entity.getId());
+        }
     }
 }
