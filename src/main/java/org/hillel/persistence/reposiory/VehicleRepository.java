@@ -9,4 +9,18 @@ public class VehicleRepository extends CommonRepository<VehicleEntity, Long> {
     protected VehicleRepository() {
         super(VehicleEntity.class);
     }
+
+    @Override
+    public void removeById(Long id) {
+        final VehicleEntity vehicleEntity = new VehicleEntity();
+        vehicleEntity.setId(id);
+        remove(vehicleEntity);
+    }
+
+    @Override
+    public void remove(VehicleEntity entity) {
+        entity = findById(entity.getId()).get();
+        entity.removeAllJourneys();
+        super.remove(entity);
+    }
 }

@@ -30,11 +30,23 @@ public class TicketClient {
         return vehicleService.createOrUpdate(vehicleEntity);
     }
 
+    public void removeVehicleById(Long id) {
+        vehicleService.removeById(id);
+    }
+
+    public void removeVehicle(VehicleEntity entity) {
+        vehicleService.remove(entity);
+    }
+
     public FreePlacesEntity createOrUpdate(FreePlacesEntity freePlacesEntity) {
         return freePlaces.createOrUpdate(freePlacesEntity);
     }
 
     public StopEntity createOrUpdate(StopEntity stopEntity) {
         return stopService.createOrUpdate(stopEntity);
+    }
+
+    public void removeStop(StopEntity stopEntity) {
+        stopService.remove(stopEntity);
     }
 }

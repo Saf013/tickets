@@ -26,6 +26,8 @@ public class Starter {
 
         vehicleEntity1.addFreePlaces(buildPlaces(vehicleEntity1.getNameVehicle(), 50));
         ticketClient.createOrUpdate(vehicleEntity1);
+        ticketClient.removeVehicle(vehicleEntity1);
+        ticketClient.removeStop(stopEntity);
 
     }
 

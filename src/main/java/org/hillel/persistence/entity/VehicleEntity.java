@@ -3,6 +3,7 @@ package org.hillel.persistence.entity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.util.CollectionUtils;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -19,12 +20,12 @@ public class VehicleEntity extends AbstractModifyEntity<Long>{
     private String nameVehicle;
 
     @Column(name = "number_of_seats")
-    private Integer numberOfSeats;
+    private int numberOfSeats;
 
     @OneToMany(mappedBy = "vehicle")
     private List<JourneyEntity> journeys = new ArrayList<>();
 
-    @OneToMany(mappedBy = "vehicleEntity", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @OneToMany(mappedBy = "vehicleEntity", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, orphanRemoval = true)
     private List<FreePlacesEntity> freePlaces = new ArrayList<>();
 
     public void addJourney(final JourneyEntity journeyEntity) {
@@ -42,6 +43,15 @@ public class VehicleEntity extends AbstractModifyEntity<Long>{
         }
         freePlaces.add(places);
         places.setVehicleEntity(this);
+    }
+
+    public void removeAllJourneys(){
+        if (CollectionUtils.isEmpty(journeys)) {
+            return;
+
+        } else {
+            journeys.forEach(item->item.setVehicle(null));
+        }
     }
 
     @Override

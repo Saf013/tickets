@@ -19,4 +19,14 @@ public class TransactionalStopService {
         Objects.requireNonNull(stopEntity, "not must be null");
         return stopRepository.createOrUpdate(stopEntity);
     }
+
+    @Transactional
+    public void removeById(Long id) {
+        stopRepository.removeById(id);
+    }
+
+    @Transactional
+    public void remove(StopEntity stopEntity) {
+        stopRepository.remove(stopEntity);
+    }
 }

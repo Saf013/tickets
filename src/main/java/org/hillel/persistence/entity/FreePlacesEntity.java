@@ -6,7 +6,6 @@ import lombok.Setter;
 import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
-import java.util.Objects;
 
 @Entity
 @Table(name = "free_places")
@@ -20,7 +19,7 @@ public class FreePlacesEntity extends AbstractModifyEntity<Long> {
     private String vehicleName;
 
     @Column(name = "free_places")
-    private Integer freePlaces;
+    private int freePlaces;
 
     @ManyToOne
     @JoinColumn(name = "vehicle_id")
