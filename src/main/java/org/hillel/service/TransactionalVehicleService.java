@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collection;
+
 @Service
 public class TransactionalVehicleService {
 
@@ -25,5 +27,30 @@ public class TransactionalVehicleService {
     @Transactional
     public void remove(VehicleEntity entity) {
         vehicleRepository.remove(entity);
+    }
+
+    @Transactional(readOnly = true)
+    public Collection<VehicleEntity> findAll(){
+        return vehicleRepository.findAll();
+    }
+
+    @Transactional(readOnly = true)
+    public Collection<VehicleEntity> findAllAsNative(){
+        return vehicleRepository.findAllAsNative();
+    }
+
+    @Transactional(readOnly = true)
+    public Collection<VehicleEntity> findAllAsCriteria(){
+        return vehicleRepository.findAllAsCriteria();
+    }
+
+    @Transactional(readOnly = true)
+    public Collection<VehicleEntity> findAllAsNamedQuery(String name) {
+        return vehicleRepository.findAllAsNamedQuery(name);
+    }
+
+    @Transactional(readOnly = true)
+    public Collection<VehicleEntity> findAllAsStoredProcedure() {
+        return vehicleRepository.findAllAsStoredProcedure();
     }
 }

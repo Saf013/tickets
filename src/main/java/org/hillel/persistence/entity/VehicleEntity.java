@@ -4,6 +4,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.util.CollectionUtils;
+import org.hibernate.annotations.NamedQueries;
+import org.hibernate.annotations.NamedQuery;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -14,6 +16,10 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
+
+@NamedQueries(value = {
+        @NamedQuery(name = "findAllAsNamedQueryVehicle", query = "from VehicleEntity")
+})
 public class VehicleEntity extends AbstractModifyEntity<Long>{
 
     @Column(name = "name", length = 100)
@@ -58,6 +64,7 @@ public class VehicleEntity extends AbstractModifyEntity<Long>{
     public String toString() {
         return "VehicleEntity{" +
                 "nameVehicle='" + nameVehicle + '\'' +
+                ", numberOfSeats=" + numberOfSeats +
                 '}';
     }
 }

@@ -4,6 +4,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.annotations.NamedQueries;
+import org.hibernate.annotations.NamedQuery;
 
 import javax.persistence.*;
 
@@ -13,6 +15,10 @@ import javax.persistence.*;
 @Setter
 @NoArgsConstructor
 @DynamicUpdate
+
+@NamedQueries(value = {
+        @NamedQuery(name = "findFreePlaces", query = "from FreePlacesEntity")
+})
 public class FreePlacesEntity extends AbstractModifyEntity<Long> {
 
     @Column(name = "vehicel_name")
