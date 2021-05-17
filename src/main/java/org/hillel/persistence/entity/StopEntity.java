@@ -4,6 +4,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.util.CollectionUtils;
+import org.hibernate.annotations.NamedQueries;
+import org.hibernate.annotations.NamedQuery;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -14,6 +16,10 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
+
+@NamedQueries(value = {
+        @NamedQuery(name = "findAllNamedQueryStops", query = "from StopEntity ")
+})
 public class StopEntity extends AbstractModifyEntity<Long>{
 
     @Column(name = "name", length = 80)
@@ -50,5 +56,13 @@ public class StopEntity extends AbstractModifyEntity<Long>{
         } else {
             journeys.forEach(item->item.setStops(null));
         }
+    }
+
+    @Override
+    public String toString() {
+        return "StopEntity{" +
+                "name='" + name + '\'' +
+                ", city='" + city + '\'' +
+                '}';
     }
 }

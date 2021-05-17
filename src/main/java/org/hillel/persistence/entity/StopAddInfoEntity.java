@@ -3,6 +3,8 @@ package org.hillel.persistence.entity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.NamedQueries;
+import org.hibernate.annotations.NamedQuery;
 
 import javax.persistence.*;
 import java.time.Instant;
@@ -12,11 +14,11 @@ import java.time.Instant;
 @Getter
 @Setter
 @NoArgsConstructor
-public class StopAddInfoEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+@NamedQueries(value = {
+        @NamedQuery(name = "findAllNamedQueryStopAdd", query = "from StopAddInfoEntity")
+})
+public class StopAddInfoEntity extends AbstractModifyEntity<Long> {
 
     @Column(name = "latitude")
     private Double latitude;
@@ -34,4 +36,14 @@ public class StopAddInfoEntity {
     @MapsId
     @JoinColumn(name = "stop_id")
     private StopEntity stop;
+
+    @Override
+    public String toString() {
+        return "StopAddInfoEntity{" +
+                ", latitude=" + latitude +
+                ", longitude=" + longitude +
+                ", buildDate=" + buildDate +
+                ", description='" + description + '\'' +
+                '}';
+    }
 }

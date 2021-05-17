@@ -4,6 +4,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hillel.persistence.entity.enm.Direction;
+import org.hibernate.annotations.NamedQueries;
+import org.hibernate.annotations.NamedQuery;
+
 
 import javax.persistence.*;
 import java.time.Instant;
@@ -15,6 +18,10 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
+
+@NamedQueries(value = {
+        @NamedQuery(name = "findAllAsNamedQuery", query = "from JourneyEntity")
+})
 public class JourneyEntity extends AbstractModifyEntity<Long>{
 
     @Column(name = "station_from", length = 80, nullable = false)

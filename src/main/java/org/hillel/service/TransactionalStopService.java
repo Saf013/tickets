@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collection;
 import java.util.Objects;
 
 @Service
@@ -28,5 +29,30 @@ public class TransactionalStopService {
     @Transactional
     public void remove(StopEntity stopEntity) {
         stopRepository.remove(stopEntity);
+    }
+
+    @Transactional(readOnly = true)
+    public Collection<StopEntity> findAll(){
+        return stopRepository.findAll();
+    }
+
+    @Transactional(readOnly = true)
+    public Collection<StopEntity> findAllAsNative(){
+        return stopRepository.findAllAsNative();
+    }
+
+    @Transactional(readOnly = true)
+    public Collection<StopEntity> findAllAsCriteria(){
+        return stopRepository.findAllAsCriteria();
+    }
+
+    @Transactional(readOnly = true)
+    public Collection<StopEntity> findAllAsNamedQuery(String name) {
+        return stopRepository.findAllAsNamedQuery(name);
+    }
+
+    @Transactional(readOnly = true)
+    public Collection<StopEntity> findAllAsStoredProcedure() {
+        return stopRepository.findAllAsStoredProcedure();
     }
 }
