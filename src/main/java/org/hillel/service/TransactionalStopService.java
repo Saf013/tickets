@@ -42,8 +42,8 @@ public class TransactionalStopService {
     }
 
     @Transactional(readOnly = true)
-    public Collection<StopEntity> findAllAsCriteria(){
-        return stopRepository.findAllAsCriteria();
+    public Collection<StopEntity> findAllAsCriteriaPageSort(int page, int pageSize, String exp, boolean ascen){
+        return stopRepository.findAllAsCriteriaPageSort(page, pageSize, exp, ascen);
     }
 
     @Transactional(readOnly = true)

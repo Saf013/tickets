@@ -40,8 +40,8 @@ public class TransactionalVehicleService {
     }
 
     @Transactional(readOnly = true)
-    public Collection<VehicleEntity> findAllAsCriteria(){
-        return vehicleRepository.findAllAsCriteria();
+    public Collection<VehicleEntity> findAllAsCriteriaPageSort(int page, int pageSize, String exp, boolean ascen){
+        return vehicleRepository.findAllAsCriteriaPageSort(page, pageSize, exp, ascen);
     }
 
     @Transactional(readOnly = true)
@@ -52,5 +52,15 @@ public class TransactionalVehicleService {
     @Transactional(readOnly = true)
     public Collection<VehicleEntity> findAllAsStoredProcedure() {
         return vehicleRepository.findAllAsStoredProcedure();
+    }
+
+    @Transactional(readOnly = true)
+    public Collection<VehicleEntity> findAllVehiclesMinPlaces(){
+        return vehicleRepository.findAllVehiclesMinPlaces();
+    }
+
+    @Transactional(readOnly = true)
+    public Collection<VehicleEntity> findAllVehiclesMaxPlaces(){
+        return vehicleRepository.findAllVehiclesMaxPlaces();
     }
 }

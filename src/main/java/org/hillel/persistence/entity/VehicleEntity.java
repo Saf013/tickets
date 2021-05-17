@@ -63,7 +63,8 @@ public class VehicleEntity extends AbstractModifyEntity<Long>{
     @Override
     public String toString() {
         return "VehicleEntity{" +
-                "nameVehicle='" + nameVehicle + '\'' +
+                "id=" + getId() +
+                ", nameVehicle='" + nameVehicle + '\'' +
                 ", numberOfSeats=" + numberOfSeats +
                 '}';
     }

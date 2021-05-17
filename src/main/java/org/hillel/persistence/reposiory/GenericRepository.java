@@ -17,7 +17,7 @@ public interface GenericRepository<E, ID> {
 
     Collection<E> findAllAsNative();
 
-    Collection<E> findAllAsCriteria();
+    Collection<E> findAllAsCriteriaPageSort(int page, int pageSize, String exp, boolean ascen);
 
     Collection<E> findAllAsNamedQuery(String name);
 
