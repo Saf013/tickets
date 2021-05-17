@@ -13,23 +13,21 @@ public class Starter {
     public static void main(String[] args) {
         ApplicationContext applicationContext = new ClassPathXmlApplicationContext("common-beans.xml");
         TicketClient ticketClient = applicationContext.getBean(TicketClient.class);
-        JourneyEntity journeyEntity = buildJourney("Kiev", "Odessa", Instant.now(), Instant.now().plusSeconds(1000000),
-                "Kiev->Odessa", Direction.TO, true);
 
-        StopEntity stopEntity = buildStop("Kievskaya", "Kiev", 249D, 269D,
-                Instant.now().minusSeconds(10000000), "");
+        System.out.println("Сортировка по id, от наименьшего к большему");
+        System.out.println(ticketClient.findAllAsCriteriaVehiclesPageSort(1, 5, VehicleEntity_.ID, true));
 
-        VehicleEntity vehicleEntity1 = buildVehicle("Bus_250", 60);
-        journeyEntity.addStop(stopEntity);
-        journeyEntity.addVehicle(vehicleEntity1);
-        ticketClient.createOrUpdate(journeyEntity);
+        System.out.println("Сортировка Journey по stationFrom ");
+        System.out.println(ticketClient.findAllAsCriteriaJourneysPageSort(1, 10, JourneyEntity_.STATION_FROM, false));
 
-        vehicleEntity1.addFreePlaces(buildPlaces(vehicleEntity1.getNameVehicle(), 50));
-        ticketClient.createOrUpdate(vehicleEntity1);
-        System.out.println(ticketClient.findAllVehiclesAsStoredProcedure());
-        System.out.println(ticketClient.findAllAsNamedQueryStops("findAllNamedQueryStops"));
-        System.out.println(ticketClient.findAllJourneys());
+        System.out.println("Сортировка по active");
+        System.out.println(ticketClient.findAllAsCriteriaVehiclesPageSort(1, 10, VehicleEntity_.ACTIVE, true));
 
+        System.out.println("Cписок транспортных средств с наибольшим количеством свободных мест.");
+        System.out.println(ticketClient.findAllVehiclesMaxPlaces());
+
+        System.out.println("Cписок транспортных средств с наименьшим количеством свободных мест.");
+        System.out.println(ticketClient.findAllVehiclesMinPlaces());
     }
 
     public static JourneyEntity buildJourney(final String from, final String to, final Instant departure,

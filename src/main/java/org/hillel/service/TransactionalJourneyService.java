@@ -32,8 +32,8 @@ public class TransactionalJourneyService {
     }
 
     @Transactional(readOnly = true)
-    public Collection<JourneyEntity> findAllAsCriteria(){
-        return journeyRepository.findAllAsCriteria();
+    public Collection<JourneyEntity> findAllAsCriteriaPageSort(int page, int pageSize, String exp, boolean ascen){
+        return journeyRepository.findAllAsCriteriaPageSort(page, pageSize, exp, ascen);
     }
 
     @Transactional(readOnly = true)

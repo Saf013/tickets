@@ -36,8 +36,8 @@ public class TicketClient {
         return transactionalJourneyService.findAllAsNative();
     }
 
-    public Collection<JourneyEntity> findAllAsCriteriaJourneys(){
-        return transactionalJourneyService.findAllAsCriteria();
+    public Collection<JourneyEntity> findAllAsCriteriaJourneysPageSort(int page, int pageSize, String exp, boolean ascen){
+        return transactionalJourneyService.findAllAsCriteriaPageSort(page, pageSize, exp, ascen);
     }
 
     public Collection<JourneyEntity> findAllAsNamedQueryJourneys(String name){
@@ -64,8 +64,8 @@ public class TicketClient {
         return vehicleService.findAllAsNative();
     }
 
-    public Collection<VehicleEntity> findAllAsCriteriaVehicles(){
-        return vehicleService.findAllAsCriteria();
+    public Collection<VehicleEntity> findAllAsCriteriaVehiclesPageSort(int page, int pageSize, String exp, boolean ascen){
+        return vehicleService.findAllAsCriteriaPageSort(page, pageSize, exp, ascen);
     }
 
     public Collection<VehicleEntity> findAllAsNamedQueryVehicles(String name){
@@ -80,6 +80,14 @@ public class TicketClient {
         vehicleService.remove(entity);
     }
 
+    public Collection<VehicleEntity> findAllVehiclesMinPlaces(){
+        return vehicleService.findAllVehiclesMinPlaces();
+    }
+
+    public Collection<VehicleEntity> findAllVehiclesMaxPlaces(){
+        return vehicleService.findAllVehiclesMaxPlaces();
+    }
+
     public FreePlacesEntity createOrUpdate(FreePlacesEntity freePlacesEntity) {
         return freePlaces.createOrUpdate(freePlacesEntity);
     }
@@ -92,8 +100,8 @@ public class TicketClient {
         return freePlaces.findAllAsNative();
     }
 
-    public Collection<FreePlacesEntity> findAllAsCriteriaPlaces(){
-        return freePlaces.findAllAsCriteria();
+    public Collection<FreePlacesEntity> findAllAsCriteriaPlacesPageSort(int page, int pageSize, String exp, boolean ascen){
+        return freePlaces.findAllAsCriteriaPageSort(page, pageSize, exp, ascen);
     }
 
     public Collection<FreePlacesEntity> findAllAsNamedQueryPlaces(String name){
@@ -120,8 +128,8 @@ public class TicketClient {
         return stopService.findAllAsNative();
     }
 
-    public Collection<StopEntity> findAllAsCriteriaStops(){
-        return stopService.findAllAsCriteria();
+    public Collection<StopEntity> findAllAsCriteriaStopsPageSort(int page, int pageSize, String exp, boolean ascen){
+        return stopService.findAllAsCriteriaPageSort(page, pageSize, exp, ascen);
     }
 
     public Collection<StopEntity> findAllAsNamedQueryStops(String name){
@@ -140,8 +148,8 @@ public class TicketClient {
         return stopAddService.findAllAsNative();
     }
 
-    public Collection<StopAddInfoEntity> findAllAsCriteriaStopsInfo(){
-        return stopAddService.findAllAsCriteria();
+    public Collection<StopAddInfoEntity> findAllAsCriteriaStopsInfoPageSort(int page, int pageSize, String exp, boolean ascen){
+        return stopAddService.findAllAsCriteriaPageSort(page, pageSize, exp, ascen);
     }
 
     public Collection<StopAddInfoEntity> findAllAsNamedQueryStopsInfo(String name){

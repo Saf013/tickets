@@ -1,5 +1,6 @@
 package org.hillel.persistence.reposiory;
 
+import org.hibernate.query.criteria.internal.OrderImpl;
 import org.hillel.persistence.entity.AbstractModifyEntity;
 import org.springframework.util.Assert;
 
@@ -70,11 +71,15 @@ public abstract class CommonRepository <E extends AbstractModifyEntity<ID>, ID e
     }
 
     @Override
-    public Collection<E> findAllAsCriteria() {
+    public Collection<E> findAllAsCriteriaPageSort(int page, int pageSize, String exp, boolean ascen) {
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
         CriteriaQuery<E> query = criteriaBuilder.createQuery(entityClass);
         Root<E> from = query.from(entityClass);
-        return entityManager.createQuery(query.select(from)).getResultList();
+        return entityManager.createQuery(query.select(from)
+                .orderBy(new OrderImpl(from.get(exp), ascen)))
+                .setFirstResult((page - 1) * pageSize)
+                .setMaxResults(pageSize)
+                .getResultList();
     }
 
     @Override

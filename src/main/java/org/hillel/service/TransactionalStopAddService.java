@@ -25,8 +25,8 @@ public class TransactionalStopAddService extends AbstractModifyEntity<Long> {
     }
 
     @Transactional(readOnly = true)
-    public Collection<StopAddInfoEntity> findAllAsCriteria(){
-        return infoRepository.findAllAsCriteria();
+    public Collection<StopAddInfoEntity> findAllAsCriteriaPageSort(int page, int pageSize, String exp, boolean ascen){
+        return infoRepository.findAllAsCriteriaPageSort(page, pageSize, exp, ascen);
     }
 
     @Transactional(readOnly = true)

@@ -30,8 +30,8 @@ public class TransactionalFreePlaces {
     }
 
     @Transactional(readOnly = true)
-    public Collection<FreePlacesEntity> findAllAsCriteria(){
-        return freePlacesRepository.findAllAsCriteria();
+    public Collection<FreePlacesEntity> findAllAsCriteriaPageSort(int page, int pageSize, String exp, boolean ascen){
+        return freePlacesRepository.findAllAsCriteriaPageSort(page, pageSize, exp, ascen);
     }
 
     @Transactional(readOnly = true)
