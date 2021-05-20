@@ -1,24 +1,28 @@
 package org.hillel.service;
 
 import org.hillel.persistence.entity.JourneyEntity;
-import org.hillel.persistence.reposiory.JourneyRepository;
+import org.hillel.persistence.jpa.repository.JourneyJpaRepository;
+import org.hillel.persistence.jpa.repository.specification.JourneySpecification;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Objects;
 
 @Service
 public class TransactionalJourneyService {
 
     @Autowired
-    private JourneyRepository journeyRepository;
+    private JourneyJpaRepository journeyRepository;
 
     @Transactional
     public JourneyEntity createOrUpdate(final JourneyEntity journeyEntity) {
         Objects.requireNonNull(journeyEntity);
-        return journeyRepository.createOrUpdate(journeyEntity);
+        return journeyRepository.save(journeyEntity);
     }
 
     @Transactional(readOnly = true)
@@ -27,22 +31,12 @@ public class TransactionalJourneyService {
     }
 
     @Transactional(readOnly = true)
-    public Collection<JourneyEntity> findAllAsNative(){
-        return journeyRepository.findAllAsNative();
+    public Collection<JourneyEntity> onlyActive() {
+        return journeyRepository.findAll(JourneySpecification.onlyActive());
     }
 
     @Transactional(readOnly = true)
-    public Collection<JourneyEntity> findAllAsCriteria(){
-        return journeyRepository.findAllAsCriteria();
-    }
-
-    @Transactional(readOnly = true)
-    public Collection<JourneyEntity> findAllAsNamedQuery(String name) {
-        return journeyRepository.findAllAsNamedQuery(name);
-    }
-
-    @Transactional(readOnly = true)
-    public Collection<JourneyEntity> findAllAsStoredProcedure(){
-        return journeyRepository.findAllAsStoredProcedure();
+    public List<JourneyEntity> pageSort(int page, int pageSize, String sortParam, Sort.Direction direction) {
+        return journeyRepository.pageSort(PageRequest.of(page, pageSize, Sort.by(direction, sortParam)));
     }
 }

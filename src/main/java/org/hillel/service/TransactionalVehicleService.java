@@ -1,40 +1,45 @@
 package org.hillel.service;
 
 import org.hillel.persistence.entity.VehicleEntity;
-import org.hillel.persistence.reposiory.VehicleRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.hillel.persistence.jpa.repository.VehicleJpaRepository;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
+import java.util.List;
 
 @Service
 public class TransactionalVehicleService {
 
-    @Autowired
-    private VehicleRepository vehicleRepository;
+    private final VehicleJpaRepository vehicleRepository;
+
+    public TransactionalVehicleService(VehicleJpaRepository vehicleRepository) {
+        this.vehicleRepository = vehicleRepository;
+    }
 
     @Transactional
     public VehicleEntity createOrUpdate(VehicleEntity vehicleEntity) {
-        return vehicleRepository.createOrUpdate(vehicleEntity);
+        return vehicleRepository.save(vehicleEntity);
     }
 
     @Transactional
     public void removeById(Long id) {
-        vehicleRepository.removeById(id);
+        vehicleRepository.deleteById(id);
     }
 
     @Transactional
     public void remove(VehicleEntity entity) {
-        vehicleRepository.remove(entity);
+        vehicleRepository.delete(entity);
     }
 
     @Transactional(readOnly = true)
     public Collection<VehicleEntity> findAll(){
-        return vehicleRepository.findAll();
+        return (Collection<VehicleEntity>) vehicleRepository.findAll();
     }
 
-    @Transactional(readOnly = true)
+/*    @Transactional(readOnly = true)
     public Collection<VehicleEntity> findAllAsNative(){
         return vehicleRepository.findAllAsNative();
     }
@@ -52,5 +57,20 @@ public class TransactionalVehicleService {
     @Transactional(readOnly = true)
     public Collection<VehicleEntity> findAllAsStoredProcedure() {
         return vehicleRepository.findAllAsStoredProcedure();
+    }*/
+
+    @Transactional(readOnly = true)
+    public List<VehicleEntity> pageSort(int page, int pageSize, String sortParam, Sort.Direction direction) {
+        return vehicleRepository.pageSort(PageRequest.of(page, pageSize, Sort.by(direction, sortParam)));
+    }
+
+    @Transactional(readOnly = true)
+    public Collection<VehicleEntity> findAllVehiclesMinPlaces() {
+        return vehicleRepository.findAllVehiclesMinPlaces();
+    }
+
+    @Transactional(readOnly = true)
+    public Collection<VehicleEntity> findAllVehiclesMaxPlaces() {
+        return vehicleRepository.findAllVehiclesMaxPlaces();
     }
 }
