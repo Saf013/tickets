@@ -1,58 +1,40 @@
 package org.hillel.service;
 
 import org.hillel.persistence.entity.StopEntity;
-import org.hillel.persistence.reposiory.StopRepository;
+import org.hillel.persistence.jpa.repository.StopJpaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Collection;
+import java.util.List;
 import java.util.Objects;
 
 @Service
 public class TransactionalStopService {
 
     @Autowired
-    private StopRepository stopRepository;
+    private StopJpaRepository stopRepository;
 
     @Transactional
     public StopEntity createOrUpdate(StopEntity stopEntity) {
         Objects.requireNonNull(stopEntity, "not must be null");
-        return stopRepository.createOrUpdate(stopEntity);
+        return stopRepository.save(stopEntity);
     }
 
     @Transactional
     public void removeById(Long id) {
-        stopRepository.removeById(id);
+        stopRepository.deleteById(id);
     }
 
     @Transactional
     public void remove(StopEntity stopEntity) {
-        stopRepository.remove(stopEntity);
+        stopRepository.delete(stopEntity);
     }
 
     @Transactional(readOnly = true)
-    public Collection<StopEntity> findAll(){
-        return stopRepository.findAll();
-    }
-
-    @Transactional(readOnly = true)
-    public Collection<StopEntity> findAllAsNative(){
-        return stopRepository.findAllAsNative();
-    }
-
-    @Transactional(readOnly = true)
-    public Collection<StopEntity> findAllAsCriteria(){
-        return stopRepository.findAllAsCriteria();
-    }
-
-    @Transactional(readOnly = true)
-    public Collection<StopEntity> findAllAsNamedQuery(String name) {
-        return stopRepository.findAllAsNamedQuery(name);
-    }
-
-    @Transactional(readOnly = true)
-    public Collection<StopEntity> findAllAsStoredProcedure() {
-        return stopRepository.findAllAsStoredProcedure();
+    public List<StopEntity> pageSort(int page, int pageSize, String sortParam, Sort.Direction direction) {
+        return stopRepository.pageSort(PageRequest.of(page, pageSize, Sort.by(direction, sortParam)));
     }
 }

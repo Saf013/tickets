@@ -1,30 +1,31 @@
 package org.hillel.service;
 
-import org.hillel.persistence.entity.AbstractModifyEntity;
 import org.hillel.persistence.entity.StopAddInfoEntity;
-import org.hillel.persistence.reposiory.StopAddInfoRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.hillel.persistence.jpa.repository.StopAddInfoJpaRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
 
-@Service
-public class TransactionalStopAddService extends AbstractModifyEntity<Long> {
-    @Autowired
-    private StopAddInfoRepository infoRepository;
+@Service("transactionalStopAddService")
+public class TransactionalStopAddService {
+    private final StopAddInfoJpaRepository infoRepository;
+
+    public TransactionalStopAddService(StopAddInfoJpaRepository infoRepository) {
+        this.infoRepository = infoRepository;
+    }
 
     @Transactional(readOnly = true)
     public Collection<StopAddInfoEntity> findAll(){
         return infoRepository.findAll();
     }
 
-    @Transactional(readOnly = true)
+/*    @Transactional(readOnly = true)
     public Collection<StopAddInfoEntity> findAllAsNative(){
         return infoRepository.findAllAsNative();
-    }
+    }*/
 
-    @Transactional(readOnly = true)
+    /*@Transactional(readOnly = true)
     public Collection<StopAddInfoEntity> findAllAsCriteria(){
         return infoRepository.findAllAsCriteria();
     }
@@ -37,5 +38,5 @@ public class TransactionalStopAddService extends AbstractModifyEntity<Long> {
     @Transactional(readOnly = true)
     public Collection<StopAddInfoEntity> findAllAsStoredProcedure() {
         return infoRepository.findAllAsStoredProcedure();
-    }
+    }*/
 }

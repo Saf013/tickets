@@ -1,35 +1,29 @@
 package org.hillel;
 
+import org.hillel.config.RootConfig;
 import org.hillel.persistence.entity.*;
 import org.hillel.persistence.entity.enm.Direction;
 import org.hillel.service.TicketClient;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.data.domain.Sort;
 
 import java.time.Instant;
 
 public class Starter {
 
     public static void main(String[] args) {
-        ApplicationContext applicationContext = new ClassPathXmlApplicationContext("common-beans.xml");
+        ApplicationContext applicationContext = new AnnotationConfigApplicationContext(RootConfig.class);
         TicketClient ticketClient = applicationContext.getBean(TicketClient.class);
-        JourneyEntity journeyEntity = buildJourney("Kiev", "Odessa", Instant.now(), Instant.now().plusSeconds(1000000),
-                "Kiev->Odessa", Direction.TO, true);
 
-        StopEntity stopEntity = buildStop("Kievskaya", "Kiev", 249D, 269D,
-                Instant.now().minusSeconds(10000000), "");
+        System.out.println("Поиск только активных Journey");
+        System.out.println(ticketClient.onlyActive());
 
-        VehicleEntity vehicleEntity1 = buildVehicle("Bus_250", 60);
-        journeyEntity.addStop(stopEntity);
-        journeyEntity.addVehicle(vehicleEntity1);
-        ticketClient.createOrUpdate(journeyEntity);
+        System.out.println("Поиск с сортрировкой");
+        System.out.println(ticketClient.pageSortVehicle(0, 10, VehicleEntity_.NUMBER_OF_SEATS, Sort.Direction.ASC));
 
-        vehicleEntity1.addFreePlaces(buildPlaces(vehicleEntity1.getNameVehicle(), 50));
-        ticketClient.createOrUpdate(vehicleEntity1);
-        System.out.println(ticketClient.findAllVehiclesAsStoredProcedure());
-        System.out.println(ticketClient.findAllAsNamedQueryStops("findAllNamedQueryStops"));
-        System.out.println(ticketClient.findAllJourneys());
-
+        System.out.println("Трансортные средства с наименьшим количесвом");
+        System.out.println(ticketClient.findAllVehiclesMinPlaces());
     }
 
     public static JourneyEntity buildJourney(final String from, final String to, final Instant departure,
